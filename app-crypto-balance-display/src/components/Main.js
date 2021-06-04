@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import BalanceTable from './BalanceTable'
 import addresses from '../addresses.js'
 import Web3 from 'web3'
 
@@ -91,9 +92,7 @@ export default function Main() {
             <button onClick={displayBalance}>DisplayBalance</button>
             <div>
                 { enabled ? "true" : "false" }
-                <ul>
-                    { Object.entries(balances).map((e, idx) => <li key={idx}>{e}</li>) }
-                </ul>
+                <BalanceTable balances={balances}/>
             </div>
         </Fragment>
     )
