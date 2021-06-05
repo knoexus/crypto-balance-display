@@ -2,10 +2,19 @@ import React, { Fragment, useEffect, useState } from 'react'
 import BalanceTable from './BalanceTable'
 import addresses from '../addresses.js'
 import Web3 from 'web3'
+import { ChainId, Fetcher, Route, WETH } from '@uniswap/sdk'
+import UniswapRatesTable from './UniswapRatesTable'
 
 export default function Main() {
     const [enabled, changeEnabled] = useState(false)
     const [balances, changeBalances] = useState({
+        "ETH": null,
+        "USDC": null,
+        "DAI": null
+    })
+
+    const anchor_token_symbol = "USDT"
+    const [rates, changeRates] = useState({
         "ETH": null,
         "USDC": null,
         "DAI": null
@@ -87,12 +96,48 @@ export default function Main() {
         // balance = web3.utils.hexToNumber(balance) / Math.pow(10, 6)
     }
 
+    const getExchangeRateERC20_ERC_20 = async (symbol_of, symbol_for) => {
+        const SWAP_OF = await Fetcher.fetchTokenData(ChainId.MAINNET, addresses[symbol_of])
+        const SWAP_FOR = await Fetcher.fetchTokenData(ChainId.MAINNET, addresses[symbol_for])
+        
+        const pair = await Fetcher.fetchPairData(SWAP_FOR, SWAP_OF)
+        const route = new Route([pair], SWAP_OF)
+
+        return route.midPrice.toSignificant(6)
+    }
+
+    const getExchangeRateETH_ERC_20 = async (symbol_for) => {
+        const SWAP_FOR = await Fetcher.fetchTokenData(ChainId.MAINNET, addresses[symbol_for])
+        const pair = await Fetcher.fetchPairData(SWAP_FOR, WETH[SWAP_FOR.chainId])
+        const route = new Route([pair], WETH[SWAP_FOR.chainId])
+        return route.midPrice.toSignificant(6)
+    }
+
+    const getExchangeRates = async (swap_token_symbol) => {
+        try {
+            const DAI_SWAP = await getExchangeRateERC20_ERC_20("DAI", swap_token_symbol)
+            const USDC_SWAP = await getExchangeRateERC20_ERC_20("USDC", swap_token_symbol)
+            const ETH_SWAP = await getExchangeRateETH_ERC_20(swap_token_symbol)
+            changeRates({
+                "ETH": ETH_SWAP,
+                "USDC": USDC_SWAP,
+                "DAI": DAI_SWAP
+            })
+        }
+        catch {
+            alert("Error while executing swap rates calculation.")
+        }
+    }
+
+
     return (
         <Fragment>
             <button onClick={displayBalance}>DisplayBalance</button>
+            <button onClick={() => getExchangeRates(anchor_token_symbol)}>SwapRate</button>
             <div>
                 { enabled ? "true" : "false" }
                 <BalanceTable balances={balances}/>
+                <UniswapRatesTable anchor_token_symbol={anchor_token_symbol} rates={rates}/>
             </div>
         </Fragment>
     )
