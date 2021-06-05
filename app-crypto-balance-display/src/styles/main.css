@@ -83,6 +83,27 @@
   outline: none;
 }
 
+.button__show-swap-rates:hover,
+.button__show-swap-rates:active {
+  color: white;
+  background-color: rgb(184, 56, 223);
+  border-color: rgb(184, 56, 223);
+}
+
+.button__show-balances:hover,
+.button__show-balances:active {
+  color: white;
+  background-color: rgb(250, 181, 78);
+  border-color: rgb(250, 181, 78);
+}
+
+.button__connect:hover,
+.button__connect:active {
+  color: white;
+  background-color: rgb(63, 63, 63);
+  border-color: rgb(63, 63, 63);
+}
+
 .h4__table-name {
   margin: 12px 0;
 }
