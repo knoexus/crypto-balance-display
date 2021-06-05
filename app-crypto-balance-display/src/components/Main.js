@@ -144,7 +144,7 @@ export default function Main() {
     return (
         <div className="div__main">
             <div className="div___connection">
-                <button onClick={connectToWallet} className="button__connect">Connect</button>
+                { !isConnected && <button onClick={connectToWallet} className="button__connect">Connect</button> }
                 <span className={`span__connection-status span__connection-status-${isConnected ? "affirmative" : "negative"}`}>{ isConnected ? "" : "Not " } Connected to MetaMask</span>
             </div>
             {
