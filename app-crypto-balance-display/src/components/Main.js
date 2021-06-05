@@ -6,7 +6,7 @@ import { ChainId, Fetcher, Route, WETH } from '@uniswap/sdk'
 import UniswapRatesTable from './UniswapRatesTable'
 
 export default function Main() {
-    const [enabled, changeEnabled] = useState(false)
+    const [isConnected, changeConnected] = useState(false)
     const [balances, changeBalances] = useState({
         "ETH": null,
         "USDC": null,
@@ -21,14 +21,14 @@ export default function Main() {
     })
     const [web3, setWeb3] = useState(null)
 
-    useEffect(() => {
+    const connectToWallet = () => {
         if (window.web3) {
             window.web3 = new Web3(window.web3.currentProvider)
             window.ethereum.enable()
-            changeEnabled(true)
+            changeConnected(true)
             setWeb3(window.web3)
         }
-    }, [])
+    }
 
     const displayBalance = async () => {
         if (web3) {
@@ -132,13 +132,21 @@ export default function Main() {
 
     return (
         <Fragment>
-            <button onClick={displayBalance}>DisplayBalance</button>
-            <button onClick={() => getExchangeRates(anchor_token_symbol)}>SwapRate</button>
             <div>
-                { enabled ? "true" : "false" }
-                <BalanceTable balances={balances}/>
-                <UniswapRatesTable anchor_token_symbol={anchor_token_symbol} rates={rates}/>
+                <button onClick={connectToWallet} className="connect">Connect</button>
+                { isConnected ? "" : "Not " } Connected To MetaMask
             </div>
+            {
+                isConnected &&
+                <div>
+                    <button onClick={displayBalance}>DisplayBalance</button>
+                    <button onClick={() => getExchangeRates(anchor_token_symbol)}>SwapRate</button>
+                    <div>
+                        <BalanceTable balances={balances}/>
+                        <UniswapRatesTable anchor_token_symbol={anchor_token_symbol} rates={rates}/>
+                    </div>
+                </div>
+            }
         </Fragment>
     )
 }
