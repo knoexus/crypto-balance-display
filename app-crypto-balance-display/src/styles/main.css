@@ -1,0 +1,108 @@
+.div__main {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.div___connection,
+.div__table-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.div__tables {
+  margin-top: 40px;
+}
+
+.div__table-info {
+  margin-top: 20px;
+}
+
+.div__table-info:last-child {
+  margin-top: 30px;
+}
+
+.button__connect {
+  font-size: 14px;
+  font-weight: 200;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  margin: 10px;
+  text-align: center;
+  color: black;
+  box-shadow: 0 0 4px rgb(172, 166, 166);
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 20px;
+  background: transparent;
+  border-color: black;
+  transition: 0.4s ease-in-out;
+  outline: none;
+}
+
+.button__show-balances {
+  font-size: 14px;
+  font-weight: 200;
+  cursor: pointer;
+  width: 130px;
+  height: 40px;
+  margin: 10px;
+  text-align: center;
+  color: rgb(218, 139, 21);
+  box-shadow: 0 0 4px rgb(218, 139, 21);
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 20px;
+  background: transparent;
+  border-color: rgb(218, 139, 21);
+  transition: 0.4s ease-in-out;
+  outline: none;
+}
+
+.button__show-swap-rates {
+  font-size: 14px;
+  font-weight: 200;
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+  margin: 10px;
+  text-align: center;
+  color: rgb(105, 32, 128);
+  box-shadow: 0 0 4px rgb(105, 32, 128);
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 20px;
+  background: transparent;
+  border-color: rgb(105, 32, 128);
+  transition: 0.4s ease-in-out;
+  outline: none;
+}
+
+.h4__table-name {
+  margin: 12px 0;
+}
+
+.span__connection-status {
+  position: relative;
+  margin-right: 11px;
+}
+
+.span__connection-status::after {
+  position: absolute;
+  font-size: 50px;
+  content: "•";
+  margin-top: -24px;
+}
+
+.span__connection-status-affirmative::after {
+  color: rgb(93, 216, 93);
+}
+
+.span__connection-status-negative::after {
+  color: rgb(236, 78, 78);
+}

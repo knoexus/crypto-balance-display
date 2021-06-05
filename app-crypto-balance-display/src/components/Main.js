@@ -1,12 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import BalanceTable from './BalanceTable'
+import Loading from './Loading'
 import addresses from '../addresses.js'
 import Web3 from 'web3'
 import { ChainId, Fetcher, Route, WETH } from '@uniswap/sdk'
 import UniswapRatesTable from './UniswapRatesTable'
 
+import '../styles/main.css'
+
 export default function Main() {
     const [isConnected, changeConnected] = useState(false)
+    const [loadingBalances, changeLoadingBalances] = useState(false)
     const [balances, changeBalances] = useState({
         "ETH": null,
         "USDC": null,
@@ -14,6 +18,7 @@ export default function Main() {
     })
 
     const anchor_token_symbol = "USDT"
+    const [loadingRates, changeLoadingRates] = useState(false)
     const [rates, changeRates] = useState({
         "ETH": null,
         "USDC": null,
@@ -38,6 +43,7 @@ export default function Main() {
                 }
                 const account = accs[0]
                 try {
+                    changeLoadingBalances(true)
                     const ethBalance = await getEthBalance(account)
                     const daiBalance = await getTokenBalance(addresses["DAI"], account)
                     const usdcBalance = await getTokenBalance(addresses["USDC"], account) 
@@ -46,7 +52,9 @@ export default function Main() {
                         "USDC": usdcBalance,
                         "DAI": daiBalance
                     })
+                    changeLoadingBalances(false)
                 } catch(err) {
+                    changeLoadingBalances(false)
                     alert('Make sure you have selected a valid network or have sufficient gas.')
                 }
             }) 
@@ -115,6 +123,7 @@ export default function Main() {
 
     const getExchangeRates = async (swap_token_symbol) => {
         try {
+            changeLoadingRates(true)
             const DAI_SWAP = await getExchangeRateERC20_ERC_20("DAI", swap_token_symbol)
             const USDC_SWAP = await getExchangeRateERC20_ERC_20("USDC", swap_token_symbol)
             const ETH_SWAP = await getExchangeRateETH_ERC_20(swap_token_symbol)
@@ -123,30 +132,34 @@ export default function Main() {
                 "USDC": USDC_SWAP,
                 "DAI": DAI_SWAP
             })
+            changeLoadingRates(false)
         }
         catch {
+            changeLoadingRates(false)
             alert("Error while executing swap rates calculation.")
         }
     }
 
 
     return (
-        <Fragment>
-            <div>
-                <button onClick={connectToWallet} className="connect">Connect</button>
-                { isConnected ? "" : "Not " } Connected To MetaMask
+        <div className="div__main">
+            <div className="div___connection">
+                <button onClick={connectToWallet} className="button__connect">Connect</button>
+                <span className={`span__connection-status span__connection-status-${isConnected ? "affirmative" : "negative"}`}>{ isConnected ? "" : "Not " } Connected to MetaMask</span>
             </div>
             {
                 isConnected &&
-                <div>
-                    <button onClick={displayBalance}>DisplayBalance</button>
-                    <button onClick={() => getExchangeRates(anchor_token_symbol)}>SwapRate</button>
-                    <div>
+                <div className="div__tables">
+                    <div className="div__table-info">
+                        <button className="button__show-balances" onClick={displayBalance}>{loadingBalances ? <Loading className="loading-show-balances"/> : "Display Balance"}</button>
                         <BalanceTable balances={balances}/>
+                    </div>
+                    <div className="div__table-info">
+                        <button className="button__show-swap-rates" onClick={() => getExchangeRates(anchor_token_symbol)}>{loadingRates ? <Loading className="loading-show-swap-rates"/> : "Display Exchange Rates"}</button>
                         <UniswapRatesTable anchor_token_symbol={anchor_token_symbol} rates={rates}/>
                     </div>
                 </div>
             }
-        </Fragment>
+        </div>
     )
 }
