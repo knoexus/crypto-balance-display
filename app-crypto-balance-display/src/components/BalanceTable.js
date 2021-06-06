@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import Loading from './Loading'
-import addresses from '../addresses.js'
+import { addresses } from '../addresses.js'
 import abis from '../abis.js'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -73,7 +73,7 @@ export default function BalanceTable({web3, init_state}) {
 
     return (
         <Fragment>
-            <button className="button__show-balances" onClick={displayBalance}>{loadingBalances ? <Loading className="loading-show-balances"/> : "Display Balance"}</button>
+            <button className="button__show-balances" onClick={displayBalance}>{loadingBalances ? <Loading className="loading-show-balances"/> : "Display Balances"}</button>
             <h4 className="h4__table-name">Your Token Balances</h4>
             <TableContainer component={Paper}>
                 <Table size="small" aria-label="a dense table">
