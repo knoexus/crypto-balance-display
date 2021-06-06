@@ -109,22 +109,17 @@
 }
 
 .span__connection-status {
-  position: relative;
-  margin-right: 11px;
   margin-top: 10px;
 }
 
-.span__connection-status::after {
-  position: absolute;
-  font-size: 50px;
-  content: "•";
-  margin-top: -24px;
+.svg___connection-status {
+  margin-left: 5px;
 }
 
-.span__connection-status-affirmative::after {
-  color: rgb(93, 216, 93);
+.svg___connection-status-ok {
+  fill: rgb(93, 216, 93);
 }
 
-.span__connection-status-negative::after {
-  color: rgb(236, 78, 78);
+.svg___connection-status-not-ok  {
+  fill: rgb(255, 52, 52);
 }

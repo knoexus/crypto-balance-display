@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import BalanceTable from './BalanceTable'
 import UniswapRatesTable from './UniswapRatesTable'
+import StatusIcon from './StatusIcon'
 import Web3 from 'web3'
 
 import '../styles/main.css'
@@ -33,7 +34,10 @@ export default function Main() {
         <div className="div__main">
             <div className="div___connection">
                 { !isConnected && <button onClick={connectToWallet} className="button__connect">Connect</button> }
-                <span className={`span__connection-status span__connection-status-${isConnected ? "affirmative" : "negative"}`}>{ isConnected ? "" : "Not " } Connected to MetaMask</span>
+                <div className="div__connection-status">
+                    <span className="span__connection-status">{ isConnected ? "" : "Not " } Connected to MetaMask</span>
+                    <StatusIcon isOk={isConnected}/>
+                </div>
             </div>
             {
                 isConnected &&
