@@ -20,7 +20,7 @@ export default function UniswapRatesTable({web3, anchor_token_symbol, init_state
     const [loadingRates, changeLoadingRates] = useState(false)
     const [rates, changeRates] = useState(init_state)
 
-    const [fetchMethod, changeFetchMethod] = React.useState('sdk')
+    const [fetchMethod, changeFetchMethod] = useState('web3')
 
     const handleFetchMethod = (e, newFetchMethod) => {
         changeFetchMethod(newFetchMethod)
@@ -160,11 +160,11 @@ export default function UniswapRatesTable({web3, anchor_token_symbol, init_state
     return (
         <Fragment>
             <ToggleButtonGroup className={classes.toggle} value={fetchMethod} exclusive onChange={handleFetchMethod} aria-label="text formatting">
-                <ToggleButton value="sdk" aria-label="bold">
-                    SDK
-                </ToggleButton>
                 <ToggleButton value="web3" aria-label="bold">
                     WEB3
+                </ToggleButton>
+                <ToggleButton value="sdk" aria-label="bold">
+                    SDK
                 </ToggleButton>
             </ToggleButtonGroup>
             <button className="button__show-swap-rates" onClick={() => getExchangeRatesWithSelection(anchor_token_symbol)}>{loadingRates ? <Loading className="loading-show-swap-rates"/> : "Display Exchange Rates"}</button>
