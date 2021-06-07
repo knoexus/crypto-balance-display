@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import Loading from './Loading'
-import { addresses } from '../addresses.js'
+import { addresses } from '../token_info.js'
 import abis from '../abis.js'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -27,10 +27,12 @@ export default function BalanceTable({web3, init_state}) {
                     const ethBalance = await getEthBalance(account)
                     const daiBalance = await getTokenBalance(addresses["DAI"], account)
                     const usdcBalance = await getTokenBalance(addresses["USDC"], account) 
+                    const linkBalance = await getTokenBalance(addresses["LINK"], account) 
                     changeBalances({
                         "ETH": ethBalance,
                         "USDC": usdcBalance,
-                        "DAI": daiBalance
+                        "DAI": daiBalance,
+                        "LINK": linkBalance
                     })
                     changeLoadingBalances(false)
                 } catch(err) {
@@ -40,7 +42,7 @@ export default function BalanceTable({web3, init_state}) {
             }) 
         }
         else {
-            console.log('here') // trigger error
+            alert('An error occured while connecting to MetaMask.')
         }
     }
 

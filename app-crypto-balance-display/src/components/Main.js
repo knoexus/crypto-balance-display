@@ -11,7 +11,7 @@ export default function Main() {
     const [web3, setWeb3] = useState(null)
 
     const anchor_token_symbol = "USDT"
-    const symbols = ["ETH", "USDC", "DAI"]
+    const symbols = ["ETH", "USDC", "DAI", "LINK"]
     const symbol_init = symbols.reduce((acc, el) => {
         acc[el] = null
         return acc

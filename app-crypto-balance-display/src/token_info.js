@@ -1,0 +1,25 @@
+const addresses = {
+    "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // test 0x07865c6E87B9F70255377e024ace6630C1Eaa37F
+    "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "LINK": "0x514910771af9ca656af840dff83e8264ecf986ca"
+}
+
+const decimals = {
+    "DAI": 18,
+    "USDC": 6,
+    "USDT": 6,
+    "WETH": 18,
+    "LINK": 18
+}
+
+const uniswap_addresses = {
+    "uniswap_factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+    "DAI": "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
+    "USDC": "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc",
+    "USDT": "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852",
+    "LINK": "0xa2107FA5B38d9bbd2C461D6EDf11B11A50F6b974"
+}
+
+export {decimals, uniswap_addresses, addresses}
